@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class NoteManager : MonoBehaviour
+public class NoteManager : Singleton<NoteManager>
 {
-    public static NoteManager Instance { get; private set; }
+    //public static NoteManager Instance { get; private set; }
 
     [Header("수첩 UI 연결")]
     public GameObject noteUIPanel; // 화면 중앙에 띄울 수첩 UI 패널 전체
@@ -13,8 +13,8 @@ public class NoteManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        //if (Instance == null) Instance = this;
+        //else Destroy(gameObject);
 
         // 시작할 땐 수첩 UI를 꺼둡니다.
         if (noteUIPanel != null) noteUIPanel.SetActive(false);

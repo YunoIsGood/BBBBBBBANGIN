@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InspectManager : MonoBehaviour
+public class InspectManager : Singleton<InspectManager>
 {
-    public static InspectManager Instance { get; private set; }
+    //public static InspectManager Instance { get; private set; }
 
     [Header("관찰 설정")]
     public float rotationSpeed = 0.5f;   // 드래그 회전 속도
@@ -13,8 +13,8 @@ public class InspectManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        //if (Instance == null) Instance = this;
+        //else Destroy(gameObject);
     }
 
     public void StartInspect(InventoryItem item)

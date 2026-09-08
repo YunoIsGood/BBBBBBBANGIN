@@ -9,9 +9,9 @@ public class InventoryItem
     public GameObject inspectInstance;
 }
 
-public class InventoryManager : MonoBehaviour
+public class InventoryManager : Singleton<InventoryManager>
 {
-    public static InventoryManager Instance { get; private set; }
+    //public static InventoryManager Instance { get; private set; }
 
     public List<InventoryItem> inventory = new List<InventoryItem>();
     
@@ -24,9 +24,9 @@ public class InventoryManager : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
-        if (Instance == null) { Instance = this; }
-        else { Destroy(gameObject); }
+        //DontDestroyOnLoad(gameObject);
+        //if (Instance == null) { Instance = this; }
+        //else { Destroy(gameObject); }
     }
 
     public void AddItem(ItemData newData)

@@ -13,9 +13,9 @@ public class PhoneResponse
     public UnityEvent onCallComplete; 
 }
 
-public class PhonePuzzleManager : MonoBehaviour
+public class PhonePuzzleManager : Singleton<PhonePuzzleManager>
 {
-    public static PhonePuzzleManager Instance { get; private set; }
+    //public static PhonePuzzleManager Instance { get; private set; }
 
     [Header("전화번호부 세팅")]
     public List<PhoneResponse> phoneBook = new List<PhoneResponse>();
@@ -41,8 +41,8 @@ public class PhonePuzzleManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        //if (Instance == null) Instance = this;
+        //else Destroy(gameObject);
 
         if (dialogueText != null) dialogueText.text = "";
         if (lcdText != null) lcdText.text = ""; // 시작할 땐 LCD 화면 끄기
