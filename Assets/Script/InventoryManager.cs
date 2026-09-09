@@ -11,27 +11,14 @@ public class InventoryItem
 
 public class InventoryManager : Singleton<InventoryManager>
 {
-    //public static InventoryManager Instance { get; private set; }
-
-    public List<InventoryItem> inventory = new List<InventoryItem>();
-    
-    // [추가됨] 현재 선택된 아이템
+    public List<InventoryItem> inventory = new();
     public InventoryItem SelectedItem { get; private set; } 
-
     public event Action OnInventoryChanged;
-    // [추가됨] 아이템 선택 상태가 바뀔 때마다 실행될 이벤트
     public event Action<InventoryItem> OnSelectionChanged; 
-
-    private void Awake()
-    {
-        //DontDestroyOnLoad(gameObject);
-        //if (Instance == null) { Instance = this; }
-        //else { Destroy(gameObject); }
-    }
 
     public void AddItem(ItemData newData)
     {
-        InventoryItem newItem = new InventoryItem();
+        InventoryItem newItem = new();
         newItem.data = newData;
 
         if (newData.inspectPrefab != null)

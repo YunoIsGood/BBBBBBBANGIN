@@ -8,7 +8,7 @@ public class InventoryUI : MonoBehaviour
     public GameObject slotPrefab;   
 
     // 생성된 슬롯들을 추적하기 위한 리스트
-    private List<InventorySlot> activeSlots = new List<InventorySlot>();
+    private List<InventorySlot> activeSlots = new();
 
     private void Start()
     {
