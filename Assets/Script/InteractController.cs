@@ -16,13 +16,13 @@ public class InteractController : MonoBehaviour
     private Vector2 mousePressPos;
     private bool isDragging = false;
 
-    void Start()
+    private void Start()
     {
         mainCamera = GetComponent<Camera>();
         if (mainCamera == null) mainCamera = Camera.main;
     }
 
-    void Update()
+    private void Update()
     {
         if (Mouse.current == null) return;
 
@@ -66,6 +66,8 @@ public class InteractController : MonoBehaviour
     // 실제 레이저를 쏘고 상호작용하는 함수 (중복 코드를 하나로 묶음)
     private void PerformRaycast()
     {
+        if (GameManager.Instance.CurrentState == GameState.Inspecting)
+            return;
         Ray ray;
         if (Cursor.lockState == CursorLockMode.Locked)
         {

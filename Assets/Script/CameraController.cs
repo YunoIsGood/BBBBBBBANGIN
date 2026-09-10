@@ -1,3 +1,6 @@
+using System;
+using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,12 +12,13 @@ public class CameraController : MonoBehaviour
 
     private float rotationX = 0f;
     private float rotationY = 0f;
-    
+
     // 토글 상태 저장용 변수
     private bool isCursorMode = false;
-    
+
     // 마우스 복귀 스파이크 방지용 플래그
     private bool skipNextFrameDelta = false;
+    private bool wasFreeLook = true;
 
     void Start()
     {
@@ -32,16 +36,24 @@ public class CameraController : MonoBehaviour
     {
         if (Keyboard.current == null || Mouse.current == null) return;
 
+
         if (GameManager.Instance.CurrentState == GameState.FreeLook)
         {
+            // 관찰 종료 시 복원된 커서 상태와 내부 토글 상태를 맞춥니다.
+            if (!wasFreeLook)
+            {
+                isCursorMode = Cursor.lockState != CursorLockMode.Locked;
+                skipNextFrameDelta = true;
+            }
+            wasFreeLook = true;
             // 1. 스페이스바를 '딸깍' 누른 순간 상태 반전 (토글)
             if (Keyboard.current.spaceKey.wasPressedThisFrame)
             {
                 isCursorMode = !isCursorMode;
                 SetCursorMode(isCursorMode);
-                
+
                 // 마우스가 화면 중앙으로 강제 복귀할 때 화면이 튀는 현상 방지
-                if (!isCursorMode) 
+                if (!isCursorMode)
                 {
                     skipNextFrameDelta = true;
                 }
@@ -63,7 +75,7 @@ public class CameraController : MonoBehaviour
                 float mouseY = mouseDelta.y * sensitivity;
 
                 rotationY += mouseX;
-                rotationX -= mouseY; 
+                rotationX -= mouseY;
 
                 rotationX = Mathf.Clamp(rotationX, -maxYAngle, maxYAngle);
 
@@ -72,7 +84,8 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            // 수첩을 펴거나 공중전화로 줌인하는 등 특수 상태로 넘어가면 
+            wasFreeLook = false;
+            // 수첩을 펴거나 공중전화로 줌인하는 등 특수 상태로 넘어가면
             // 나중을 위해 토글 상태를 1인칭 모드로 초기화해 둠
             isCursorMode = false;
         }
@@ -83,7 +96,7 @@ public class CameraController : MonoBehaviour
     {
         Cursor.lockState = showCursor ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = showCursor;
-        
+
         // [Tip] 나중에 인벤토리 UI 게임오브젝트를 끄고 켜는 코드를 이 줄 아래에 추가하면 됩니다.
     }
 }
